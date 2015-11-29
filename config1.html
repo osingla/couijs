@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="couijs.css" media="screen">
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.10.0/dijit/themes/claro/claro.css" media="screen">
+        <script>dojoConfig = { isDebug: true, async: true }</script>
+		<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.10.0/dojo/dojo.js" data-dojo-config="isDebug: true, async: false, parseOnLoad: true"></script>
+		<script> 
+			function touched() { console.log( "Touched!" ); } 
+			function untouched() { console.log( "Untouched!" ); } 
+			function after_apply_and_reboot() { alert(1); console.log( "After apply and reboot!" ); } 
+		</script>
+        <script>
+        	couijs_config = {
+        		xml_input:  'config1.xml', 
+        		xml_output: 'new-config1.xml',
+        		notitle: false,
+        		title: 'Fictional Device Configuration',
+        		title_top: '<b><big>Fictional Device Configuration</big></b>',
+        		title_right: 'a Fictional Company',
+        		sections_pos: 'left-h',
+        		labels_align: 'right',
+        		base: '',
+        		cb_touched: touched,
+        		cb_untouched: untouched,
+        		cb_after_apply_and_reboot: after_apply_and_reboot,
+        	}
+        </script>
+		<script src="couijs.js"></script>
+	</head>
+
+<body class="claro" >
+</body>
+
+</html>
