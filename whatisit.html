@@ -1,0 +1,62 @@
+<html>
+
+    <head>
+
+        <style>
+
+        </style>
+
+    </head>
+
+    <body>
+
+		COUIJS is a minimalist tool which
+		<ul>
+			<li>is written in Javascript,</li>
+			<li>read an XML configuration file,</li>
+			<li>and create dynamically a user-interface which allow to edit and update the configuration file.</li>
+		</ul>
+
+		The typical use of COUIJS would be in an embedded device, where the configuration is stored as an XML file. <br>
+		You could change the configuration by using one of these methods:
+		<ul>
+			<li>log into the device (for instance with ssh), then use vi or something similar (nano, etc.)</li>
+			<li>create a custom UI in javascript</li>
+			<li>or use COUIJS ;-)</li>
+		</ul>
+
+		The 1st option (vi or nano) is certainly not an option for the end-user. <br>
+		<br>
+		The 2nd option has the advantage of offering a great level of customization. <br>
+        Unfortunately, every time you change the XML configuration file 
+		(adding, removing or changing something), you will need to change this custom program. <br>
+		<br>
+		The 3rd option, using COUIJS, offer much less customization, but since it builds the User Interface solely from the XML configuration file, 
+		it does not need to change. <br>
+		<br> 
+
+		The concept behind COUIJS is to add a few information within the XML configuration file so the tool <b>can create the UI for you!</b> <br>
+		These information will be typically:
+		<ul>
+			<li>the type of input (checkbox, list, etc.)</li>
+			<li>some information related to the type of input (for instance, if it is a list, that would be the list of possible of values)</li>
+			<li>and some optional rules (for instance you might want to edit some settings only if another setting has a specific value).</li>
+		</ul>
+
+		COUIJS needs the XML configuration file to be organized following a specific hierarchical structure, grouping the different settings into
+		<ul>
+			<li>sections</li>
+			<li>sub-sections</li>
+			<li>keys</li>
+		</ul> 
+		The keys being the only editable items by the user of the UI, and the sections and sub=-sections being a way to organize the items that can be configured.
+		<br>
+		<br>
+
+		Also, COUIJS is using the <a href="http://dojotoolkit.org/" target="_blank">DOJO toolkit</a>.
+		<br>
+		This way, it can uses the nice widgets provided by Dojo (<a href="http://dojotoolkit.org/reference-guide/1.10/dijit/index.html#id1" target="_blank">dijit</a>).
+
+    </body>
+
+</html>

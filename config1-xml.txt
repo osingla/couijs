@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SECTIONS>
+    <SECTION name="Video"
+        help="Video Related Items">
+        <SUBSECTION label="Video Source"
+            name="VideoSource"
+            help="Configuration of the\nVideo Source">
+            <KEY name="IsVideoEnabled"
+                label="Enable Video Recording"
+                help="Enable Video Recording"
+                type="boolean"
+                value="true">
+            </KEY>
+            <KEY name="VideoSourceSize"
+                label="Image Size"
+                help="Video capture resolution and frame rate~"
+                type="list"
+                value="1080P30"
+                index="0"
+                values="['1080P30','720P30']"
+            	visible="($IsVideoEnabled)">
+            </KEY>
+        </SUBSECTION>
+        <SUBSECTION label="Video Encoding Configuration"
+            name="VideoEncodingConfig"
+            help="Configuration of the\nH.264 encoding for\nthe primary video"
+            visible="($IsVideoEnabled)">
+            <KEY name="VideoH264Profile"
+                label="H.264 Profile"
+                help="H.264 Profile : BP=Baseline - MP=Main - HP=High"
+                type="list"
+                value="High"
+                index="2"
+                values="['Baseline', 'Main', 'High']"
+                advanced="true">
+            </KEY>
+            <KEY name="VideoFPS"
+                skipline="false"
+                label="Frames Per Second"
+                suffix="FPS"
+                help="Number of frames per second"
+                type="list"
+                value="30"
+                index="0"
+                values="[30]"
+                advanced="true">
+            </KEY>
+            <KEY name="VideoGopSize"
+                label="GOP size"
+                help="Generate one I-frame each specified frames"
+                type="list"
+                value="30"
+                index="3"
+                values="[5,10,15,30,60]"
+                advanced="true">
+            </KEY>
+            <KEY name="VideoRateControlMode"
+                label="Rate Control Mode"
+                help="Rate Control Mode - Either VBR (Variable Bit Rate) or CBR (Constant Bit Rate)"
+                type="list"
+                value="VBR"
+                index="0"
+                values="['VBR','CBR']">
+            </KEY>
+            <KEY name="VideoBitrate"
+                label="Bitrate"
+                suffix="Mbs"
+                help="Video bitrate, in Mps (Megabits Per Second)"
+                type="list"
+                value="8.0"
+                index="1"
+                values="['6.0','8.0','10.0','12.0']">
+            </KEY>
+            <KEY name="VideoMaxBitrateVbr"
+                label="Additional Max Bitrate"
+                suffix="Mbs"
+                help="Specifies the max Additional Bitrate which the rate control can achieve~during increased complexity scene when running in VBR mode"
+                type="list"
+                value="1.0"
+                index="2"
+                values="['0','0.50','1.0','1.50','2.0','2.50']"
+                visible="($VideoRateControlMode == 'VBR')">
+            </KEY>
+            <KEY name="VideoMaxBitrateCbr"
+                label="Additional Max Bitrate"
+                suffix="Mbs"
+                help="Specifies the max Additional Bitrate which the rate control can achieve~during increased complexity scene when running in CBR mode"
+                type="list"
+                value="1.0"
+                index="1"
+                values="['0.50','1.0','1.50','2.0','2.50']"
+                visible="($VideoRateControlMode == 'CBR')">
+            </KEY>
+            <KEY name="VideoMaxHighCmpxIntCbr"
+                label="Max Duration of Increased Complexity"
+                suffix="Minutes"
+                help="Specifies the maximum duration of increased complexity. Specified in minutes~and can take any value from 0 to 60 (0 means 1.5 seconds)"
+                type="list"
+                value="1"
+                index="1"
+                values="['0','1','5','10','15','30','45','60']"
+                visible="($VideoRateControlMode == 'CBR')"
+                advanced="true">
+            </KEY>
+            <KEY name="VideoCbrSensitivity"
+                label="Max Bitrate Sensitivity"
+                help="Specifies the target bitrate used by rate control in high complexity state.~0 means rate control decides the bitrate for high complexity state depending on complexity.~8 means rate control tries to achieve maxbitrate in increased complexity state"
+                type="list"
+                value="4"
+                index="4"
+                values="['0','1','2','3','4','5','6','7','8']"
+                visible="($VideoRateControlMode == 'CBR')"
+                advanced="true">
+            </KEY>
+        </SUBSECTION>
+    </SECTION>
+    <SECTION name="Audio"
+        help="Audio Related Items">
+        <SUBSECTION label="Audio Capture"
+            name="AudioConfig">
+            <KEY name="IsAudioEnabled"
+                label="Enable Audio Recording"
+                help="Enable Audio Recording"
+                type="boolean"
+                value="true">
+            </KEY>
+            <KEY name="AudioSampleRate"
+                label="Sample rate"
+                suffix="Hz"
+                help="Sample rate, in Hz"
+                type="list"
+                value="16000"
+                index="2"
+                values="['8000','11025','16000','22050']"
+                visible="($IsAudioEnabled)">
+            </KEY>
+            <KEY name="AudioAGC"
+                label="Enable AGC"
+                help="Enable Audio Automatic Gain Control (AGC)"
+                type="boolean"
+                value="true"
+                visible="($IsAudioEnabled)"
+                advanced="true">
+            </KEY>
+            <KEY name="AudioGain"
+                label="Audio Gain"
+                help="Audio Gain, between 0% (0 dB) and 100% (59 dB) - Default is 27% (16 dB)"
+                type="numeric"
+                maxlen="5"
+                value="32"
+                visible="($IsAudioEnabled .AND. !$AudioAGC)"
+                advanced="true">
+            </KEY>
+        </SUBSECTION>
+        <SUBSECTION label="Audio Compression"
+            name="ALC"
+            visible="($IsAudioEnabled)">
+            <KEY name="AudioBitrate"
+                label="Bitrate"
+                suffix="Kbits/sec"
+                help="Audio bitrate, in Kbs (Kilobits Per Second)"
+                type="list"
+                value="32"
+                index="1"
+                values="['16','32','48','64','96','128']">
+            </KEY>
+        </SUBSECTION>
+    </SECTION>
+    <SECTION name="Subtitle"
+        help="Video Subtitles Related Items">
+        <SUBSECTION label="Subtitle"
+            name="Subtitle">
+            <KEY name="UseSubtitle"
+                skipline="false"
+                label="Use subtitle"
+                help="Does the audio/video file contain subtitle?"
+                type="boolean"
+                value="false">
+            </KEY>
+        </SUBSECTION>
+        <SUBSECTION label="Subtitle"
+            name="LabelSubtitle"
+            visible="($UseSubtitle)">
+            <KEY name="SubtitleType"
+                skipline="false"
+                label="Subtitle Type"
+                help="Choose the Subtitle type"
+                type=""
+                value="">
+            </KEY>
+            <KEY name="SubtitleIsString"
+                skipline="false"
+                label="Fixed String"
+                help="Fixed String to display"
+                type="boolean"
+                value="false">
+            </KEY>
+            <KEY name="SubtitleIsDateTime"
+                skipline="false"
+                label="Current Date/Time"
+                help="Display the current date/time as subtitle"
+                type="boolean"
+                value="false">
+            </KEY>
+        </SUBSECTION>
+    </SECTION>
+    <SECTION name="System"
+        hidden="true">
+        <SUBSECTION label="Utilities"
+            name="Utilities"
+            hidden="true">
+            <KEY name="CfgVersion"
+                label="config.xml version"
+                help="config.xml version"
+                type="alphanumeric"
+                value="8390"
+                hidden="true">
+            </KEY>
+        </SUBSECTION>
+    </SECTION>
+</SECTIONS>

@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SECTIONS>
+    <SECTION name="Video"
+        help="Video Related Items">
+        <SUBSECTION label="Video Source"
+            name="VideoSource"
+            help="Configuration of the\nVideo Source">
+            <KEY name="IsVideoEnabled"
+                label="Enable Video Recording"
+                help="Enable Video Recording"
+                type="boolean"
+                value="true">
+            </KEY>
+            <KEY name="VideoSourceSize"
+                label="Image Size"
+                help="Video capture resolution and frame rate~"
+                type="list"
+                value="1080P30"
+                index="0"
+                values="['1080P30','720P30']"
+            	visible="($IsVideoEnabled)">
+            </KEY>
+        </SUBSECTION>
+        <SUBSECTION label="Video Encoding Configuration"
+            name="VideoEncodingConfig"
+            help="Configuration of the\nH.264 encoding for\nthe primary video"
+            visible="($IsVideoEnabled)">
+            <KEY name="VideoH264Profile"
+                label="H.264 Profile"
+                help="H.264 Profile : BP=Baseline - MP=Main - HP=High"
+                type="list"
+                value="High"
+                index="2"
+                values="['Baseline', 'Main', 'High']"
+                advanced="true">
+            </KEY>
+            <KEY name="VideoFPS"
+                skipline="false"
+                label="Frames Per Second"
+                suffix="FPS"
+                help="Number of frames per second"
+                type="list"
+                value="30"
+                index="0"
+                values="[30]"
+                advanced="true">
+            </KEY>
+            <KEY name="VideoGopSize"
+                label="GOP size"
+                help="Generate one I-frame each specified frames"
+                type="list"
+                value="30"
+                index="3"
+                values="[5,10,15,30,60]"
+                advanced="true">
+            </KEY>
+            <KEY name="VideoRateControlMode"
+                label="Rate Control Mode"
+                help="Rate Control Mode - Either VBR (Variable Bit Rate) or CBR (Constant Bit Rate)"
+                type="list"
+                value="VBR"
+                index="0"
+                values="['VBR','CBR']">
+            </KEY>
+            <KEY name="VideoBitrate"
+                label="Bitrate"
+                suffix="Mbs"
+                help="Video bitrate, in Mps (Megabits Per Second)"
+                type="list"
+                value="8.0"
+                index="1"
+                values="['6.0','8.0','10.0','12.0']">
+            </KEY>
+            <KEY name="VideoMaxBitrateVbr"
+                label="Additional Max Bitrate"
+                suffix="Mbs"
+                help="Specifies the max Additional Bitrate which the rate control can achieve~during increased complexity scene when running in VBR mode"
+                type="list"
+                value="1.0"
+                index="2"
+                values="['0','0.50','1.0','1.50','2.0','2.50']"
+                visible="($VideoRateControlMode == 'VBR')">
+            </KEY>
+            <KEY name="VideoMaxBitrateCbr"
+                label="Additional Max Bitrate"
+                suffix="Mbs"
+                help="Specifies the max Additional Bitrate which the rate control can achieve~during increased complexity scene when running in CBR mode"
+                type="list"
+                value="1.0"
+                index="1"
+                values="['0.50','1.0','1.50','2.0','2.50']"
+                visible="($VideoRateControlMode == 'CBR')">
+            </KEY>
+            <KEY name="VideoMaxHighCmpxIntCbr"
+                label="Max Duration of Increased Complexity"
+                suffix="Minutes"
+                help="Specifies the maximum duration of increased complexity. Specified in minutes~and can take any value from 0 to 60 (0 means 1.5 seconds)"
+                type="list"
+                value="1"
+                index="1"
+                values="['0','1','5','10','15','30','45','60']"
+                visible="($VideoRateControlMode == 'CBR')"
+                advanced="true">
+            </KEY>
+            <KEY name="VideoCbrSensitivity"
+                label="Max Bitrate Sensitivity"
+                help="Specifies the target bitrate used by rate control in high complexity state.~0 means rate control decides the bitrate for high complexity state depending on complexity.~8 means rate control tries to achieve maxbitrate in increased complexity state"
+                type="list"
+                value="4"
+                index="4"
+                values="['0','1','2','3','4','5','6','7','8']"
+                visible="($VideoRateControlMode == 'CBR')"
+                advanced="true">
+            </KEY>
+        </SUBSECTION>
+    </SECTION>
+    <SECTION name="Audio"
+        help="Audio Related Items">
+        <SUBSECTION label="Audio Capture"
+            name="AudioConfig">
+            <KEY name="IsAudioEnabled"
+                label="Enable Audio Recording"
+                help="Enable Audio Recording"
+                type="boolean"
+                value="true">
+            </KEY>
+            <KEY name="AudioSampleRate"
+                label="Sample rate"
+                suffix="Hz"
+                help="Sample rate, in Hz"
+                type="list"
+                value="16000"
+                index="2"
+                values="['8000','11025','16000','22050']"
+                visible="($IsAudioEnabled)">
+            </KEY>
+            <KEY name="AudioAGC"
+                label="Enable AGC"
+                help="Enable Audio Automatic Gain Control (AGC)"
+                type="boolean"
+                value="true"
+                visible="($IsAudioEnabled)"
+                advanced="true">
+            </KEY>
+            <KEY name="AudioGain"
+                label="Audio Gain"
+                help="Audio Gain, between 0% (0 dB) and 100% (59 dB) - Default is 27% (16 dB)"
+                type="numeric"
+                maxlen="5"
+                value="32"
+                visible="($IsAudioEnabled .AND. !$AudioAGC)"
+                advanced="true">
+            </KEY>
+        </SUBSECTION>
+        <SUBSECTION label="Audio Compression"
+            name="ALC"
+            visible="($IsAudioEnabled)">
+            <KEY name="AudioBitrate"
+                label="Bitrate"
+                suffix="Kbits/sec"
+                help="Audio bitrate, in Kbs (Kilobits Per Second)"
+                type="list"
+                value="32"
+                index="1"
+                values="['16','32','48','64','96','128']">
+            </KEY>
+        </SUBSECTION>
+    </SECTION>
+    <SECTION name="Subtitle"
+        help="Video Subtitles Related Items">
+        <SUBSECTION label="Subtitle"
+            name="Subtitle">
+            <KEY name="UseSubtitle"
+                skipline="false"
+                label="Use subtitle"
+                help="Does the audio/video file contain subtitle?"
+                type="boolean"
+                value="false">
+            </KEY>
+        </SUBSECTION>
+        <SUBSECTION label="Subtitle"
+            name="LabelSubtitle"
+            visible="($UseSubtitle)">
+            <KEY name="SubtitleType"
+                skipline="false"
+                label="Subtitle Type"
+                help="Choose the Subtitle type"
+                type=""
+                value="">
+            </KEY>
+            <KEY name="SubtitleIsString"
+                skipline="false"
+                label="Fixed String"
+                help="Fixed String to display"
+                type="boolean"
+                value="false">
+            </KEY>
+            <KEY name="SubtitleIsDateTime"
+                skipline="false"
+                label="Current Date/Time"
+                help="Display the current date/time as subtitle"
+                type="boolean"
+                value="false">
+            </KEY>
+        </SUBSECTION>
+    </SECTION>
+	<SECTION name="Network"
+		hidden="false">
+		<SUBSECTION label="Wifi Network"
+			name="WifiNetwork">
+			<KEY name="NetworkWifiIsEnabled"
+				label="Wifi Network"
+				help="Is wireless network available"
+				type="boolean"
+				value="false">
+			</KEY>
+			<KEY name="WifiNetworkMode"
+				label="Mode"
+				help="Which wireless mode: Client or Access Point)"
+				type="list"
+				value="0"
+				values="[0,1]"
+				list="['Client','Access Point']"
+				visible="($NetworkWifiIsEnabled)">
+			</KEY>
+			<KEY name="WifiNetworkSecurity"
+				horzline="true"
+				label="Security"
+				help="Which security method is used: WPA personal, WPA2 personal"
+				type="list"
+				value="2"
+				values="[0,1,2]"
+				list="['None','WPA','WPA2']"
+				visible="($NetworkWifiIsEnabled)">
+			</KEY>
+			<KEY name="WifiNetworkCipher"
+				label="Cipher"
+				help="Which cipher method is used"
+				type="list"
+				value="2"
+				values="[0,1,2]"
+				list="['TKIP','AES','TKIP+AES']"
+				visible="($NetworkWifiIsEnabled)">
+			</KEY>
+			<KEY name="WifiNetworkAuth"
+				label="Authentication"
+				help="Which authentication method is used~PSK=Authentication via pre-shared key"
+				type="list"
+				value="0"
+				values="[0]"
+				list="['PSK (Pre Shared key)']"
+				visible="($NetworkWifiIsEnabled)">
+			</KEY>
+			<KEY name="WifiNetworkSSID"
+				label="SSID"
+				help="SSID of the wireless router access point"
+				type="alphanumeric"
+				maxlen="32"
+				value="Olivier"
+				visible="($NetworkWifiIsEnabled)"
+				check="(SSID != '')">
+			</KEY>
+			<KEY name="WifiNetworkPSK"
+				label="PSK"
+				help="PSK of the wireless router access point"
+				type="password"
+				maxlen="32"
+				value="Reivilo"
+				visible="($NetworkWifiIsEnabled)">
+			</KEY>
+			<KEY name="WifiNetworkChannel"
+				label="Channel"
+				help="Channel number"
+				type="list"
+				value="0"
+				values="[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]"
+				list="['Auto','1 - 2.412 GHz','2 - 2.417 GHz','3 - 3.422 GHz','4 - 2.427 GHz','5 - 2.432 GHz','6 - 2.437 GHz','7 - 2.442 GHz','8 - 2.447 GHz','9 - 2.452 GHz','10 - 2.457 GHz','11 - 2.462 GHz','12 - 2.467 GHz','13 - 2.472 GHz','14 - 2.484 GHz']"
+				visible="($NetworkWifiIsEnabled .AND. ($WifiNetworkMode=='1'))">
+			</KEY>
+			<KEY name="WifiNetworkIPAddr"
+				label="IP Address"
+				help="DHCP, static"
+				type="list"
+				value="dhcp"
+				values="['dhcp','static']"
+				visible="($NetworkWifiIsEnabled .AND. ($WifiNetworkMode=='0'))">
+			</KEY>
+			<KEY name="WifiNetworkIP"
+				label="Static IP Address"
+				help="Static IP address"
+				type="IP"
+				value="192.168.10.2"
+				visible="($NetworkWifiIsEnabled .AND. ($WifiNetworkMode=='0') .AND. ($WifiNetworkIPAddr=='static'))">
+			</KEY>
+			<KEY name="WifiNetworkNetmask"
+				label="Netmask"
+				help="Netmask"
+				type="list"
+				value="255.255.255.0"
+				values="['255.255.255.0','255.255.255.128','255.255.255.192','255.255.255.224','255.255.255.240','255.255.255.248','255.255.255.252']"
+				enable="($WifiNetworkIPAddr=='static')"
+				visible="($NetworkWifiIsEnabled .AND. ($WifiNetworkMode=='0') .AND. ($WifiNetworkIPAddr=='static'))">
+			</KEY>
+			<KEY name="WifiNetworkGateway"
+				label="Gateway"
+				help="Gateway"
+				type="IP"
+				value="192.168.10.1"
+				enable="($WifiNetworkIPAddr=='static')"
+				visible="($NetworkWifiIsEnabled .AND. ($WifiNetworkMode=='0') .AND. ($WifiNetworkIPAddr=='static'))">
+			</KEY>
+			<KEY name="WifiNetworkDefaultRoute"
+				label="Default route"
+				help="Check this if you want the WIFI connection to be the default route and DNS"
+				type="boolean"
+				value="false"
+				visible="($NetworkWifiIsEnabled .AND. ($WifiNetworkMode=='0'))"
+				advanced="true">
+			</KEY>
+			<KEY name="WifiNetworkIpAddress"
+				label="Wifi Network IP Address"
+				help="The Network IP Address Range for Wifi Connections.  Default is 169.254.71.1"
+				type="alphanumeric"
+				maxlen="16"
+				value="169.254.71.1"
+				visible="($NetworkWifiIsEnabled .AND. ($WifiNetworkMode=='1'))">
+			</KEY>
+			<KEY name="WifiNetworkDhcpStart"
+				label="DHCP Server Start IP Address"
+				help="The starting IP address for the DHCP Server. Default is 169.254.71.2"
+				type="alphanumeric"
+				maxlen="16"
+				value="169.254.71.2"
+				visible="($NetworkWifiIsEnabled .AND. ($WifiNetworkMode=='1'))">
+			</KEY>
+			<KEY name="WifiNetworkDhcpEnd"
+				label="DHCP Server End IP Address"
+				help="The ending IP address for the DHCP Server. Default is 169.254.71.9"
+				type="alphanumeric"
+				maxlen="16"
+				value="169.254.71.9"
+				visible="($NetworkWifiIsEnabled .AND. ($WifiNetworkMode=='1'))">
+			</KEY>
+			<KEY name="WifiNetworkVerbose"
+				label="Verbose mode"
+				help="Check this if you want to increase debugging verbosity in the system log"
+				type="boolean"
+				value="false"
+				visible="($NetworkWifiIsEnabled)"
+				advanced="true">
+			</KEY>
+		</SUBSECTION>
+		<SUBSECTION label="Wired Network"
+			name="WiredNetwork"
+			advanced="true">
+			<KEY name="NetworkWiredIsEnabled"
+				label="Wired network"
+				help="Is wired network available ?"
+				type="boolean"
+				value="true">
+			</KEY>
+			<KEY name="NetworkWiredIpAddr"
+				label="IP Address"
+				help="DHCP, static"
+				type="list"
+				value="dhcp"
+				values="['dhcp','static']"
+				visible="($NetworkWiredIsEnabled)">
+			</KEY>
+			<KEY name="NetworkWiredIp"
+				label="Static IP Address"
+				help="Static IP address"
+				type="IP"
+				value="192.168.3.12"
+				visible="($NetworkWiredIsEnabled .AND. $NetworkWiredIpAddr=='static')">
+			</KEY>
+			<KEY name="NetworkWiredNetmask"
+				label="Netmask"
+				help="Netmask"
+				type="list"
+				value="255.255.255.0"
+				values="['255.255.255.0','255.255.255.128','255.255.255.192','255.255.255.224','255.255.255.240','255.255.255.248','255.255.255.252']"
+				visible="($NetworkWiredIsEnabled .AND. $NetworkWiredIpAddr=='static')">
+			</KEY>
+			<KEY name="NetworkWiredGateway"
+				label="Gateway"
+				help="Gateway"
+				type="IP"
+				value="192.168.3.1"
+				visible="($NetworkWiredIsEnabled .AND. $NetworkWiredIpAddr=='static')">
+			</KEY>
+			<KEY name="WiredNetworkDefaultRoute"
+				label="Default route"
+				help="Check this if you want the Ethernet connection to be the default route and DNS"
+				type="boolean"
+				value="false"
+				visible="($NetworkWiredIsEnabled)"
+				advanced="true">
+			</KEY>
+		</SUBSECTION>
+		<SUBSECTION label="Ethernet over USB"
+			name="NetworkUsb"
+			advanced="true">
+			<KEY name="NetworkUsbMode"
+				label="USB mode"
+				help="Use the USB device either as MSD (export a drive) or Ethernet (networking)"
+				type="list"
+				orientation="horizontal"
+				value="0"
+				values="['0','1']">
+				list="['Network (RNDIS)','Network (RNDIS) and Media (Mass Storage R/O)']">
+			</KEY>
+			<KEY name="NetworkUsbIpAddress"
+				label="USB Network IP Address"
+				help="The Network IP Address Range for USB Connections. Default is 169.254.61.1"
+				type="alphanumeric"
+				maxlen="16"
+				value="169.254.61.1">
+			</KEY>
+			<KEY name="NetworkUsbDhcpStart"
+				label="DHCP Server Start IP Address"
+				help="The starting IP address for the DHCP Server. Default is 169.254.61.2"
+				type="alphanumeric"
+				maxlen="16"
+				value="169.254.61.2">
+			</KEY>
+			<KEY name="NetworkUsbDhcpEnd"
+				label="DHCP Server End IP Address"
+				help="The ending IP address for the DHCP Server. Default is 169.254.61.5"
+				type="alphanumeric"
+				maxlen="16"
+				value="169.254.61.5">
+			</KEY>
+		</SUBSECTION>
+		<SUBSECTION label="Bluetooth"
+			name="BluetoothNetwork">
+			<KEY name="BluetoothIsEnabled"
+				label="Bluetooth"
+				help="Is Bluetooth available"
+				type="boolean"
+				value="false">
+			</KEY>
+		</SUBSECTION>
+		<SUBSECTION label="NTP"
+			name="NetworkNtp"
+			advanced="true"
+			visible="($NetworkWifiIsEnabled .OR. $NetworkWiredIsEnabled)">
+			<KEY name="NetworkNtpClientEnabled"
+				label="Ntp Client"
+				help="Should we run NTP client"
+				type="boolean"
+				value="true">
+			</KEY>
+			<KEY name="NetworkNtpServer"
+				skipline="true"
+				label="Ntp Server Address"
+				help="NTP Server IP Address"
+				type="alphanumeric"
+				maxlen="15"
+				value="192.168.0.21"
+				visible="($NetworkNtpClientEnabled)">
+			</KEY>
+		</SUBSECTION>
+		<SUBSECTION label="DNS"
+			name="NetworkDns"
+			advanced="true"
+			visible="($NetworkWifiIsEnabled .OR. $NetworkWiredIsEnabled)">
+			<KEY name="NetworkDnsServerEnabled"
+				label="DNS Server"
+				help="Should we run a DNS server on the Device"
+				type="boolean"
+				value="true">
+			</KEY>
+			<KEY name="NetworkDnsServerIp"
+				skipline="false"
+				label="IP Address"
+				help="DNS Server - IP Address"
+				type="alphanumeric"
+				maxlen="15"
+				value="169.254.61.1"
+				enable="($NetworkDnsServerEnabled)">
+			</KEY>
+			<KEY name="NetworkDnsServerName"
+				label="Name"
+				help="DNS Server - Name"
+				type="alphanumeric"
+				maxlen="32"
+				value="MyDevice"
+				enable="($NetworkDnsServerEnabled)">
+			</KEY>
+		</SUBSECTION>
+		<SUBSECTION label="Mobile Broadband Modem"
+			name="MobileBroadbandModem">
+			<KEY name="MbmSmsEnabledThroughEmail"
+				label="Sending SMS through Email"
+				help="Can the Device send SMS using Email"
+				type="boolean"
+				value="false"
+				visible="(($NetworkWifiIsEnabled .AND. ($WifiNetworkMode=='0') .AND. $WifiNetworkDefaultRoute) .OR. ($NetworkWiredIsEnabled .AND. $WiredNetworkDefaultRoute))">
+			</KEY>
+			<KEY name="MbmIsEnabled"
+				label="Mobile Broadband Modem support"
+				help="Is support for a Mobile Broadband Modem (GSM or CDMA) enabled on the Device?"
+				type="boolean"
+				value="false">
+			</KEY>
+			<KEY name="MbmDebugIsEnabled"
+				label="MBM Debug Support"
+				help="Is Mobile Broadband Modem support debug enabled?"
+				type="boolean"
+				value="true"
+				visible="($MbmIsEnabled)"
+				advanced="true">
+			</KEY>
+			<KEY name="MbmIsSmsEnabled"
+				label="SMS support"
+				help="Does the Device supports SMS (Short Messenging Service) through the Mobile Broadband Modem connection?"
+				type="boolean"
+				value="true"
+				visible="($MbmIsEnabled)">
+			</KEY>
+			<KEY name="MbmSmsPhoneNb"
+				label="SMS phone number"
+				help="Phone number (provided as 10 digits number)where to send the SMS notifications.~This phone number might be also used to send SMS commands."
+				type="alphanumeric"
+				maxlen="18"
+				value=""
+				visible="(($MbmSmsEnabledThroughEmail.visible .AND. $MbmSmsEnabledThroughEmail) .OR. ($MbmIsEnabled .AND. $MbmIsSmsEnabled))">
+			</KEY>
+			<KEY name="MbmSmsEnabledThroughEmailCarrier"
+				label="Carrier"
+				help="carrier"
+				type="list"
+				value="0"
+				values="[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]"
+				list="['ATT','T-Mobile','Verizon','Sprint','Virgin Mobile','Tracfone','Metro PCS','Boost Mobile','Cricket','Nextel','Alltel','Ptel','Suncom','Qwest','U.S. Cellular']"
+				visible="($MbmSmsEnabledThroughEmail.visible .AND. $MbmSmsEnabledThroughEmail)">
+			</KEY>
+			<KEY name="MbmIsPppEnabled"
+				label="PPP support"
+				help="Does the Device supports PPP (Point to Point Protocol) through the Mobile Broadband Modem connection?"
+				type="boolean"
+				value="true"
+				visible="($MbmIsEnabled)">
+			</KEY>
+			<KEY name="MbmPppOnly"
+				label="PPP only"
+				help="Should the PPP (Data) connection only be established ?~In this mode, the modem is used only for incoming/outgoing email"
+				type="boolean"
+				value="true"
+				visible="($MbmIsEnabled .AND. $MbmIsPppEnabled .AND. !$MbmIsSmsEnabled)"
+				advanced="true">
+			</KEY>
+			<KEY name="MbmPppOnlyForOutgoingEmail"
+				label="PPP only for outgoing Email"
+				help="Should the PPP (Data) connection only be established when an email needs to be sent?"
+				type="boolean"
+				value="false"
+				visible="($MbmIsEnabled .AND. $MbmIsPppEnabled .AND. !$MbmIsSmsEnabled .AND. !MbmPppOnly)"
+				advanced="true">
+			</KEY>
+			<KEY name="MbmPppDebug"
+				label="PPP in debug mode"
+				help="Start PPP in debug mode"
+				type="boolean"
+				value="false"
+				hidden="true">
+			</KEY>
+		</SUBSECTION>
+		<SUBSECTION label="VPN Configuration"
+			name="VpnConfig"
+			visible="(($NetworkWifiIsEnabled .OR. $NetworkWiredIsEnabled) .OR. ($MbmIsEnabled .AND. $MbmIsPppEnabled .AND. !MbmPppOnlyForOutgoingEmail))">
+			<KEY name="IsVpnEnabled"
+				label="VPN"
+				help="Does the Device supports VPN through either the WIFI or Mobile Broadband Modem connection?~(VPN = Virtual Private Network)"
+				type="boolean"
+				value="false">
+			</KEY>
+			<KEY name="VpnType"
+				label="VPN type"
+				help="Type of VPN.~Please note that only IPSEC (CISCO) and PPTP are currently supported."
+				type="radio"
+				orientation="horizontal"
+				value="IPSEC"
+				values="['IPSEC','PPTP','OpenVPN']"
+				visible="($IsVpnEnabled)">
+			</KEY>
+			<KEY name="VpnAlways"
+				label="Leave VPN connected"
+				help="In the mode, the Device will leave VPN connected all the time.~If the VPN connection is lost, it will be reestablished automatically."
+				type="boolean"
+				value="false"
+				visible="($IsVpnEnabled)">
+			</KEY>
+		</SUBSECTION>
+		<SUBSECTION label="Cisco IPSEC VPN"
+			name="MbmVpnCiscoIpsec"
+			visible="($IsVpnEnabled .AND. $VpnType=='IPSEC')">
+			<KEY name="VpnIpsecGwAddr"
+				label="IPSec Gateway Address"
+				help="IPSec Gateway Address"
+				type="IP"
+				value="">
+			</KEY>
+			<KEY name="VpnIpsecId"
+				label="IPSec ID"
+				help="IPSec ID"
+				type="alphanumeric"
+				value="">
+			</KEY>
+			<KEY name="VpnIpsecSecret"
+				label="IPSec Secret"
+				help="IPSec Secret"
+				type="password"
+				value="">
+			</KEY>
+			<KEY name="VpnIpsecUsername"
+				label="Username"
+				help="Username"
+				type="alphanumeric"
+				value="">
+			</KEY>
+			<KEY name="VpnIpsecPassword"
+				label="Password"
+				help="Password"
+				type="password"
+				value="">
+			</KEY>
+		</SUBSECTION>
+		<SUBSECTION label="PPTP VPN"
+			name="MbmVpnPptp"
+			visible="($IsVpnEnabled .AND. $VpnType=='PPTP')">
+			<KEY name="VpnPptpServerAddr"
+				label="Server Address"
+				help="PPTP Server Address"
+				type="alphanumeric"
+				value="">
+			</KEY>
+			<KEY name="VpnPptpAccount"
+				label="Account"
+				help="PPTP Account"
+				type="alphanumeric"
+				value="">
+			</KEY>
+			<KEY name="VpnPptpPw"
+				label="Password"
+				help="PPTP Account"
+				type="password"
+				value="">
+			</KEY>
+			<KEY name="VpnPptpEncryption"
+				label="Encryption Level"
+				help="PPTP Encryption Level"
+				type="radio"
+				orientation="horizontal"
+				value="Auto"
+				values="['Auto','Maximum','None']">
+			</KEY>
+		</SUBSECTION>
+	</SECTION>
+    <SECTION name="System"
+        hidden="true">
+        <SUBSECTION label="Utilities"
+            name="Utilities"
+            hidden="true">
+            <KEY name="CfgVersion"
+                label="config.xml version"
+                help="config.xml version"
+                type="alphanumeric"
+                value="8390"
+                hidden="true">
+            </KEY>
+        </SUBSECTION>
+    </SECTION>
+</SECTIONS>

@@ -1,0 +1,73 @@
+What is-it ?
+
+COUIJS is a minimalist tool which is written in Javascript, read an XML configuration file, and create dynamically a user-interface which allow to edit the configuration file.
+
+The typical use of COUIJS is an embedded device, where the configuration is stored as an XML file. Yoy could change the configuration by one of these methods:
+- use vi or something similar (nano, etc.)
+- create a custom UI in javascript
+- or use COUIJS.
+
+The concept behind COUIJS is to add a few information within the XML config file so the tool can create the UI. These information will be typically:
+- the type of input (checkbox, list, etc.)
+- some information related to the type of input (for instance, if it is a list, that would be the list of possible of values)
+- and some optional rules (for instance you might want to edit some settings only if another setting has a specific value).
+
+The COUIJS also needs the XML configuration file to be organized following a specific hierarchical structure.
+
+Also, COUIJS is using the DOJO toolkit. This way, it can uses the nice widgets provided by Dojo (dijit).
+
+Example:
+
+This very example demonstrate the use of the tool. We'll use a dvr-like device, where we have to configure some settings such as Audio, Video, Networking and so forth.
+
+Syntax description:
+
+The XML config file needs to be organized using a three levels hierarchie:
+- section
+- subsection
+- key
+
+Help:
+
+This is an optional tag, and it can be used for both a Section, Subsection, or a Key.
+The text described in the help tag is displayed as a tooltip when the mouse cursor moves over the displayed field.
+
+Example:
+
+            <KEY name="VideoH264Profile"
+                label="H.264 Profile"
+                help="H.264 Profile : BP=Baseline - MP=Main - HP=High"
+                type="list"
+                value="High"
+                index="2"
+                values="['Baseline', 'Main', 'High']">
+            </KEY>
+
+Advanced:
+
+This is an optional tag, and it can be used for both a Section, Subsection, or a Key.
+When a Section, Subsection or Key is marked with 'advanced="true"', the item will be displayed only when the 'Advanced Options' button is checked.
+
+Example:
+
+            <KEY name="VideoH264Profile"
+                label="H.264 Profile"
+                help="H.264 Profile : BP=Baseline - MP=Main - HP=High"
+                type="list"
+                value="High"
+                index="2"
+                values="['Baseline', 'Main', 'High']"
+                advanced="true">
+            </KEY>
+
+
+Why this stupid name...
+
+COUIJS would stand for for 'COnfiguration User Interface JavaScript'
+
+Licensing:
+
+Future directions:
+
+Contact information:
+

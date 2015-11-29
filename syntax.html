@@ -1,0 +1,132 @@
+<html>
+
+    <head>
+
+        <style>
+
+        </style>
+
+    </head>
+
+    <body>
+
+        The best way to understand how COUIJS works is to take a look at the two exmples provided (config[1,2].html and config[1,2].xml)... <br>
+        <br>
+        <hr>
+        <br>
+
+        The XML config file needs to be organized using a three levels hierarchie:
+        <ul>
+	        <li>section</li>
+	        <li>subsection</li>
+	        <li>key</li>
+        </ul>
+
+        Sections and Sub-sections are mandatory in the XML configuration file&nbsp;
+        <a href="config1-xml.txt" target="_blank" type="text/plain">(see an example here)</a>:
+        <ul>
+	        <li>there should be <b>at least one section</b>;</li>
+	        <li>there should be <b>at least one sub-section</b> in each section;</li>
+	        <li>also, there should be <b>at least one key</b> in each sub-section.</li>
+        </ul>
+
+        Mandatory tags:
+        <ul>
+	        <li id='id_name' style="cursor: help;">name</li>
+	        <li id='id_label' style="cursor: help;">label </li>
+	        <li id='id_type' style="cursor: help;">type</li>
+	        <li id='id_value' style="cursor: help;">value</li>
+        </ul>
+
+		<div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'id_name',position:['above']">
+		    The name should be unique. <br>
+		    The name is used in rules (either enable or visible rule") to reference this particular key. <br>
+		    <br>
+		    Example: <br>
+			<p style="font-size:small; font-family: monospace">
+			... <br>
+            &lt;KEY <b>name="IsAudioEnabled"</b> <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;label="Enable Audio Recording" <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;help="Enable Audio Recording" <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;type="boolean" <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;value="true"&gt; <br>
+           	&lt;/KEY&gt; <br>
+            &lt;KEY name="AudioSampleRate" <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;label="Sample rate" <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;suffix="Hz" <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;help="Sample rate, in Hz" <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;type="list" <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;value="16000" <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;index="2" <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;values="['8000','11025','16000','22050']" <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;visible="(<b>$IsAudioEnabled</b>)"&gt; <br>
+           	&lt;/KEY&gt; <br>
+			... <br>
+			</p>
+		</div>
+
+		<div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'id_label',position:['above']">
+		    The label is a short text, which is displayed on the keft of the iput field <br>
+		    The name is used in rules (either enable or visible rule") to reference this particular key. <br>
+		    <br>
+		    Example: <br><br>
+			<p style="font-size:x-small; font-family: monospace">
+            	&lt;KEY <b>name="VideoH264Profile"</b> <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;label="H.264 Profile" <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;help="H.264 Profile : BP=Baseline - MP=Main - HP=High" <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;type="list" <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;value="High" <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;index="2" <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;values="['Baseline', 'Main', 'High']"&gt; <br>
+            	&lt;/KEY&gt; <br>
+			</a>
+		</div>
+
+        Optional tags:
+        <ul>
+	        <li>help</li>
+	        <li>suffix</li>
+	        <li>advanced</li>
+	        <li>hidden</li>
+	        <li>visible</li>
+	        <li>enable</li>
+	        <li>skipline</li>
+        </ul>
+
+        Help:
+
+        This is an optional tag, and it can be used for both a Section, Subsection, or a Key.
+        The text described in the help tag is displayed as a tooltip when the mouse cursor moves over the displayed field.
+
+        Example:
+
+                    <KEY name="VideoH264Profile"
+                        label="H.264 Profile"
+                        help="H.264 Profile : BP=Baseline - MP=Main - HP=High"
+                        type="list"
+                        value="High"
+                        index="2"
+                        values="['Baseline', 'Main', 'High']">
+                    </KEY>
+
+        Advanced:
+
+        This is an optional tag, and it can be used for both a Section, Subsection, or a Key.
+        When a Section, Subsection or Key is marked with 'advanced="true"', the item will be displayed only when the 'Advanced Options' button is checked.
+
+        Example:
+
+                    <KEY name="VideoH264Profile"
+                        label="H.264 Profile"
+                        help="H.264 Profile : BP=Baseline - MP=Main - HP=High"
+                        type="list"
+                        value="High"
+                        index="2"
+                        values="['Baseline', 'Main', 'High']"
+                        advanced="true">
+                    </KEY>
+
+            
+    </body>
+
+</html>
